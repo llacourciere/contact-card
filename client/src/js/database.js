@@ -75,3 +75,21 @@ export const postDb = async (name, email, phone, profile) => {
     console.log('result.value', result);
     return result?.value;
   };
+
+  export const editDb = async (id, name, email, phone, profile) => {
+    console.log('UPDATE card in database');
+
+    const contactDb = await openDB('contact_db', 1);
+
+    const tx = contactDb.transaction('contact', 'readwrite');
+
+    const store = tx.objectStore('contacts');
+
+    const request = store.put({ id: id, name: name, email: email, phone: phone, profile: profile });
+  
+    // Get confirmation of the request.
+    
+    const result = await request;
+    console.log('🚀 - data saved to the database', result);
+
+  }
